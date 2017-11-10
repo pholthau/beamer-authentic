@@ -1,0 +1,462 @@
+% Copyright (C) 2017 Patrick Holthaus
+%
+% This Program is free software: you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation, either version 3 of the License, or
+% (at your option) any later version.
+%
+% This Program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program. If not, see <http://www.gnu.org/licenses>.
+
+\ProvidesPackage{beamerthemeAuthentic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Packages/Dependencies
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\RequirePackage{tikz}
+\usetikzlibrary{shapes}
+\usetikzlibrary{calc}
+\RequirePackage{hyperref}
+\RequirePackage{url}
+\RequirePackage{xcolor}
+\RequirePackage{ifthen}
+\RequirePackage{graphicx}
+\RequirePackage{calc}
+\RequirePackage{etoolbox}
+\RequirePackage{helvet}
+\RequirePackage{fp}
+\RequirePackage{totcount}
+\regtotcounter{section}
+
+\mode<presentation>
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Units/Lengths
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% basic lengths A (horizontal), B (vertical)
+\newlength{\A}
+\newlength{\B}
+
+\setlength{\A}{0.02\paperwidth}
+\setlength{\B}{0.02\paperheight}
+
+% self defined
+% +----------------+------+
+% | : HEAD         | UTIL |
+% +-+--------------+----+-+
+% |L|                   |R|
+% |M|                   |M|
+% |A|                   |A|
+% |R|                   |R|
+% |G|                   |G|
+% |I|                   |I|
+% |N|                   |N|
+% +-+-------------------+-+
+% | : FOOT              : |
+% +-+-------------------+-+
+
+\newlength{\UTILW}
+\setlength{\UTILW}{10\A}
+
+\newlength{\HEADH}
+\setlength{\HEADH}{7\B}
+
+\newlength{\FOOTH}
+\setlength{\FOOTH}{2\B}
+
+\newlength{\MARGL}
+\setlength{\MARGL}{2\A}
+
+\newlength{\MARGR}
+\setlength{\MARGR}{2\A}
+
+\newlength{\MARGT}
+\setlength{\MARGT}{\B}
+
+\newlength{\SYMBOLW}
+\setlength{\SYMBOLW}{12\A}
+
+\newlength{\SYMBOLH}
+\setlength{\SYMBOLH}{12\B}
+
+% derived
+\newlength{\HEADW}
+\setlength{\HEADW}{\paperwidth - \UTILW}
+
+\newlength{\TEXTH}
+\setlength{\TEXTH}{\paperheight - \HEADH - \FOOTH}
+
+\newlength{\TEXTW}
+\setlength{\TEXTW}{\paperwidth - \MARGL - \MARGR}
+
+\newlength{\FOOTW}
+\setlength{\FOOTW}{\paperwidth - \MARGL - \MARGR}
+
+\newlength{\UTILH}
+\setlength{\UTILH}{\heightof{\insertsectionnavigation{0pt}}}
+\newlength{\HEADSKIP}
+\setlength{\HEADSKIP}{\maxof{\HEADH}{\UTILH}}
+
+% defaults
+\newlength{\PROGL}
+\setlength{\PROGL}{0pt}
+\newlength{\PROGR}
+\setlength{\PROGR}{\HEADW}
+\newlength{\CHAPL}
+\setlength{\CHAPL}{0pt}
+
+% overwrite beamer default values
+\setlength\fboxsep{0pt}
+\setlength\fboxrule{0pt}
+
+\setbeamersize{text margin left=\MARGL}
+\setbeamersize{text margin right=\MARGR}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Colours/Fonts
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Colors based on picture book color theme (https://color.adobe.com/explore/?q=Picture+Book)
+\definecolor{authentic@primary}{HTML}{56b9d0}
+\definecolor{authentic@background}{HTML}{fefefe}
+%\colorlet{authentic@secondary}{authentic@primary!40}%
+\definecolor{authentic@secondary}{HTML}{fbba42}
+\definecolor{authentic@tertiary}{HTML}{f24c27}
+\definecolor{authentic@quarternary}{HTML}{3b3f42}
+
+\setbeamercolor{structure}{fg=authentic@primary,bg=authentic@background}
+\setbeamercolor{palette primary}{fg=authentic@primary,bg=authentic@background}
+\setbeamercolor{palette secondary}{fg=authentic@secondary,bg=authentic@background}
+\setbeamercolor{palette tertiary}{fg=authentic@tertiary,bg=authentic@background}
+\setbeamercolor{palette quaternary}{fg=authentdic@quarternary,bg=authentic@background}
+
+% \setbeamercolor*{sidebar}{fg=authentic@primary,bg=authentic@background}
+% \setbeamercolor*{palette sidebar primary}{fg=authentic@primary,bg=authentic@background}
+% \setbeamercolor*{palette sidebar secondary}{fg=authentic@secondary,bg=authentic@background}
+% \setbeamercolor*{palette sidebar tertiary}{fg=authentic@tertiary,bg=authentic@background}
+% \setbeamercolor*{palette sidebar quaternary}{fg=authentic@quarternary,bg=authentic@background}
+
+% Main Colors
+\setbeamercolor{normal text}{fg=authentic@quarternary}
+\setbeamercolor{example text}{fg=authentic@secondary,bg=authentic@background}
+\setbeamercolor{titlelike}{fg=authentic@primary,bg=authentic@background} % Titlepage
+\setbeamercolor{separation line}{fg=authentic@background,bg=authentic@primary}
+\setbeamercolor{fine separation line}{fg=authentic@background,bg=authentic@secondary}
+
+% Bibliography Icons
+\setbeamertemplate{bibliography item}{[\theenumiv]}
+
+% Navigation Icons
+\setbeamertemplate{navigation symbols}{}
+% \setbeamertemplate{navigation symbols}[only frame symbol]
+\setbeamercolor{navigation symbols}{fg=authentic@primary,bg=authentic@secondary}
+
+% Section Listing in Head
+\setbeamertemplate{section in head/foot shaded}[default][40]
+\setbeamerfont{section in head/foot}{series=\bfseries, size*={4.8pt}{\baselineskip}}
+\setbeamercolor{section in head/foot}{fg=authentic@quarternary,bg=authentic@background}
+
+% Frame Titles
+\setbeamercolor{frametitle}{fg=authentic@background}
+\setbeamercolor{framesubtitle}{fg=authentic@secondary}
+
+% Background
+% \setbeamertemplate{background canvas}[vertical shading][top=authentic@secondary,bottom=authentic@background]
+\setbeamercolor{background canvas}{bg=authentic@background}
+% \setbeamertemplate{background}[grid][step=\A,color=authentic@primary]
+
+% Titlepage
+\setbeamercolor{title page}{fg=authentic@primary,bg=authentic@background}
+
+% Table of Contents
+\setbeamertemplate{section in toc}{\textcolor{authentic@primary}{\inserttocsectionnumber~}\inserttocsection\\[.5em]}
+\setbeamertemplate{subsection in toc}{\textcolor{authentic@secondary}{\hspace*{.5cm}\textbullet~}\inserttocsubsection\\[.25em]}
+\setbeamercolor{number in toc}{fg=authentic@primary}
+\setbeamercolor{section in toc}{fg=authentic@quarternary}
+\setbeamerfont{subsection in toc}{size=\small}
+\setbeamerfont{subsubsection in toc}{size=\footnotesize}
+
+% Parts
+\setbeamercolor{part page}{fg=authentic@primary,bg=authentic@background}
+
+% Buttons
+\setbeamercolor{button}{fg=authentic@background,bg=authentic@primary}
+
+% Items itemize/enumerate/description
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor{item}{fg=authentic@primary}
+\setbeamercolor{subitem}{fg=authentic@secondary}
+\setbeamercolor{subsubitem}{fg=authentic@tertiary}
+
+% Alerts
+\setbeamerfont{alerted text}{series=\bfseries}
+\setbeamercolor{alerted text}{fg=red}
+
+% Blocks
+\setbeamertemplate{blocks}[default]
+\setbeamercolor{block title}{fg=authentic@primary,bg=authentic@background}
+\setbeamercolor{block title alerted}{fg=red!80!blue,bg=authentic@background}
+
+
+% Block example/theorem/corollary/fact/lemma/examples omitted
+\setbeamercolor*{block title example}{fg=authentic@primary}
+\setbeamercolor*{block body example}{fg=authentic@secondary}
+\setbeamerfont*{block body example}{series=\itshape}
+
+% Captions
+\setbeamercolor{caption name}{fg=authentic@primary}
+
+% Abstract
+\setbeamercolor{abstract title}{fg=authentic@primary}
+% \setbeamercolor{abstract}{fg=black}
+
+%% Verse/Quotation/Quote
+\setbeamerfont{verse}{series=\itshape}
+\setbeamerfont{quote}{series=\itshape}
+\setbeamerfont{quotation}{series=\itshape}
+
+%%% Footnote
+\setbeamercolor{footnote mark}{fg=authentic@primary}
+
+% Footer
+\urlstyle{same}
+\setbeamercolor{webpage in footer}{fg=authentic@quarternary,bg=authentic@background}
+\setbeamercolor{email in footer}{fg=authentic@quarternary,bg=authentic@background}
+\setbeamercolor{number in footer}{fg=authentic@quarternary,bg=authentic@background}
+\setbeamerfont{webpage in footer}{series=\bfseries,size=\tiny}
+\setbeamerfont{email in footer}{series=\bfseries,size=\tiny}
+\setbeamerfont{number in footer}{series=\bfseries,size=\tiny}
+
+% Title/Subtitle
+\setbeamercolor{title in headline}{fg=authentic@background,bg=authentic@primary}
+\setbeamerfont{title in headline}{series=\bfseries,size=\Large}
+\setbeamercolor{subtitle in headline}{fg=authentic@background,bg=authentic@primary}
+\setbeamerfont{subtitle in headline}{size=\large}
+
+%% Everything else
+\setbeamercolor{headline}{fg=authentic@quarternary,bg=authentic@background}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom Commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\tobottom}{\vskip0pt plus 1filll}
+
+\newboolean{authentic@footer}
+\newboolean{authentic@mail}
+\newcommand{\myemail}[1]{%
+    \def\authentic@mail{#1}%
+    \setboolean{authentic@mail}{true}%
+    \setboolean{authentic@footer}{true}%
+}
+
+\newboolean{authentic@url}
+\newcommand{\myurl}[1]{%
+    \def\authentic@url{\url{#1}}%
+    \setboolean{authentic@url}{true}%
+    \setboolean{authentic@footer}{true}%
+}
+
+\newboolean{authentic@counter}
+\newcommand{\enablecounter}[1]{%
+    \setboolean{authentic@footer}{true}%
+    \setboolean{authentic@counter}{#1}%
+}
+
+\newboolean{authentic@section}
+\newcommand{\enablesection}[1]{%
+    \setboolean{authentic@section}{#1}%
+}
+
+\newboolean{authentic@progress}
+\newcommand{\enableprogress}[1]{%
+    \setboolean{authentic@progress}{#1}%
+}
+
+\newboolean{authentic@banner}
+\newcommand{\usebanner}[2][1]{%
+    \def\authentic@banner{\includegraphics[width=#1\SYMBOLW,height=#1\SYMBOLH,keepaspectratio]{#2}}%
+    \setboolean{authentic@banner}{true}%
+}
+
+% \newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
+
+\newboolean{authentic@primarylogo}
+\newcommand{\primarylogo}[2][0pt]{%
+    \def\authentic@primarylogo{\includegraphics[height=\HEADH-#1,width=\UTILW-#1,keepaspectratio]{#2}}%
+    \def\authentic@primarysymbol{\includegraphics[height=\SYMBOLH,width=\SYMBOLW,keepaspectratio]{#2}}%
+    \setboolean{authentic@primarylogo}{true}%
+}
+
+\newboolean{authentic@secondarylogo}
+\newcommand{\secondarylogo}[1]{%
+    \def\authentic@secondarylogo{\includegraphics[height=\HEADH,width=\UTILW,keepaspectratio]{#1}}%
+    \def\authentic@secondarysymbol{\includegraphics[height=\SYMBOLH,width=\SYMBOLW,keepaspectratio]{#1}}%
+    \setboolean{authentic@secondarylogo}{true}%
+}
+
+\newcommand{\titleframe}{%
+    {%
+        \usebackgroundtemplate{}%
+        \begin{frame}[noframenumbering,plain,t]%
+            \hypertarget{titlepage}%
+            \titlepage%
+        \end{frame}%
+    }%
+}
+
+\newenvironment{authentic@backgroundframe}{%
+    \usebackgroundtemplate{}%
+    \begin{frame}[plain]{\null}%
+}%
+{%
+    \end{frame}%
+}%
+
+% default values
+\enablecounter{true}
+\enableprogress{true}
+\enablesection{false}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title Page (contains image in colored box or plain title)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{title page}
+{%
+\tobottom
+\begin{beamercolorbox}[wd=\paperwidth]{headline}
+    \centering
+    \ifauthentic@banner
+        \authentic@banner
+
+        \bigskip
+    \fi
+    \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle
+
+    \bigskip
+    \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle
+
+    \bigskip
+    \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor
+
+    \bigskip
+    \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute
+
+    \bigskip
+    \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate
+
+    \bigskip
+    \begin{minipage}{\paperwidth}
+        \centering
+        \hspace{2\A}
+        \ifauthentic@primarylogo
+            \raisebox{-0.5\height}{\authentic@primarysymbol}
+        \fi
+        \hfill
+        \ifauthentic@secondarylogo
+            \raisebox{-0.5\height}{\authentic@secondarysymbol}
+        \fi
+        \hspace{2\A}
+    \end{minipage}
+\end{beamercolorbox}
+\tobottom
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Headline: Background shape, section navigation, logo
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{headline}
+{%
+\begin{beamercolorbox}[wd=\paperwidth]{headline}
+    \colorbox{structure}{\fbox{%
+    \noindent\begin{minipage}[b][\HEADH][c]{\HEADW}%
+        \quad%
+    \end{minipage}%
+    }}%
+    \ifauthentic@section%
+        \hspace*{-.5\A}%
+        \begin{minipage}[b][\HEADH][t]{\UTILW}
+            \insertsectionnavigation{0pt}
+        \end{minipage}
+    \else%
+        \ifauthentic@primarylogo%
+            \begin{minipage}[b][\HEADH][c]{\UTILW}
+                \centering
+                \authentic@primarylogo
+            \end{minipage}
+        \fi%
+    \fi%
+\end{beamercolorbox}
+\vspace*{-\HEADSKIP}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Frame title: title and subtitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{frametitle}
+{%
+\setlength{\CHAPL}{\maxof{\HEADW * \ratio{\insertsectionstartpage pt}{\insertdocumentendpage pt} - \MARGL}{0pt}}%
+\setlength{\PROGL}{\maxof{\HEADW * \ratio{\insertpagenumber pt}{\insertdocumentendpage pt} - \CHAPL - \MARGL}{0pt}}%
+\setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}%
+\nointerlineskip%
+\begin{minipage}[b][\HEADH][t]{\HEADW - \MARGL}
+    \vspace{\MARGT}
+    \ifx\insertframetitle\@empty
+        \hfill
+    \else
+        \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}{\insertframetitle}%
+    \fi
+    \ifx\insertframesubtitle\@empty
+        %
+    \else
+        \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\\\insertframesubtitle}%
+    \fi
+    \ifauthentic@progress%
+    \vfill
+    \tiny
+    \usebeamercolor[fg]{palette primary}{\rule{\CHAPL}{.2\A}}%
+    \usebeamercolor[fg]{palette secondary}{\rule{\PROGL}{.2\A}}%
+    \usebeamercolor[bg]{palette primary}{\rule{\PROGR}{.2\A}}%
+    \fi%
+\end{minipage}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Footline: page number, webpage, email
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setbeamertemplate{footline}
+{%
+\ifauthentic@footer
+    \begin{beamercolorbox}[wd=\paperwidth,leftskip=\MARGL,rightskip=\MARGR]{footline}%
+        \begin{minipage}[c][\FOOTH][c]{\FOOTW}%
+            \ifauthentic@url
+                \usebeamerfont{webpage in footer}\usebeamercolor[fg]{webpage in footer}{\authentic@url}
+            \else
+                \quad
+            \fi
+            \hfill
+            \ifauthentic@mail
+                \usebeamerfont{email in footer}\usebeamercolor[fg]{email in footer}{\authentic@mail}
+            \else
+                \quad
+            \fi
+            \hfill
+            \ifauthentic@counter
+                \usebeamerfont{number in footer}\usebeamercolor[fg]{number in footer}{\insertframenumber}
+            \else
+                \quad
+            \fi
+        \end{minipage}
+    \end{beamercolorbox}
+\fi
+}
+
+\mode<all>
