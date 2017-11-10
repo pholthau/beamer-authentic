@@ -1,0 +1,84 @@
+\pdfobjcompresslevel=1 %needed if there are faulty pdf/png images
+\documentclass[utf8,compress,aspectratio=169]{beamer}
+\mode<presentation>
+{
+\usetheme{Authentic}
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage{multimedia}
+\usepackage{hyperref}
+
+%% General beamer options
+\title{The Authentic Beamer Theme}
+\subtitle{Straight and simple}
+\subject{Example Presentation}
+\keywords{latex, beamer, theme}
+\author{Patrick Holthaus}
+\date{\today}
+
+%%% Default values
+%% Header/title options
+% \usebanner[1]{<img>} %mandatory: image file; optional: scale factor
+% \primarylogo[0pt]{<img>} %mandatory: image file; optional: margin
+% \secondarylogo{<img>} %mandatory: image file;
+% \enableprogress{true}
+% \enablesection{false}
+
+%% Footer options
+% \enablecounter{true}
+% \myemail{<myemail>} %default: none
+% \myurl{<myurl>} %default: none
+
+\begin{document}
+
+\titleframe
+
+\begin{frame}{Table of Contents}{}
+    \tableofcontents
+\end{frame}
+
+% \part{Main Part}
+\section[First Section Title]{My Long Section Title Number One}
+\begin{frame}[<+->][c]{My First Frame Title}{This is a subtitle}
+\begin{block}{Block title}
+  \begin{itemize}
+    \item First item
+    \begin{itemize}
+        \item Subitem
+        \item Another subitem
+    \end{itemize}
+    \item Second item
+    \begin{enumerate}[1]
+        \item Enumeration
+        \begin{enumerate}[a)]
+        \item Third level
+    \end{enumerate}
+    \end{enumerate}
+  \end{itemize}
+  \end{block}
+\end{frame}
+
+\section[Second Section Title]{My Long Section Title Number Two}
+\begin{frame}[<+->][t]{Block examples}{This is another funny subtitle}
+\begin{alertblock}{Alert block title}
+    Alert block text is top-aligned
+\end{alertblock}
+\tobottom
+\begin{exampleblock}{Example block title}
+    This example is placed at the bottom of the frame
+\end{exampleblock}
+\end{frame}
+
+\part{Thank you}
+\begin{frame}[c]{\quad}{\quad}
+\centering
+Thank you for your kind attention.\\Do you have any further questions?
+\vfill
+Contact e-mail:\\[.5em]
+\usebeamerfont{webpage in footer}
+\usebeamercolor[fg]{webpage in footer}
+\href{mailto:my-email@some-institute.com}{my-email@some-institute.com}
+\end{frame}
+
+\end{document}
