@@ -127,22 +127,38 @@
 % Colors based on picture book color theme (https://color.adobe.com/explore/?q=Picture+Book)
 \definecolor{authentic@primary}{HTML}{56B9D0}
 \definecolor{authentic@background}{HTML}{FEFEFE}
-%\colorlet{authentic@secondary}{authentic@primary!40}%
+% \colorlet{authentic@secondary}{authentic@secondary!70!authentic@background}%
 \definecolor{authentic@secondary}{HTML}{FBBA42}
 \definecolor{authentic@tertiary}{HTML}{F24C27}
 \definecolor{authentic@quarternary}{HTML}{3B3F42}
+
+% \definecolor{authentic@primary}{HTML}{4291a4}
+% \definecolor{authentic@quarternary}{HTML}{2c444b}
+% \definecolor{authentic@background}{HTML}{e2f1f2}
+% %\colorlet{authentic@secondary}{authentic@primary!40}%
+% \definecolor{authentic@secondary}{HTML}{6799a2}
+% \definecolor{authentic@tertiary}{HTML}{61d1ee}
+
+% \definecolor{authentic@primary}{HTML}{8d9934}
+% \definecolor{authentic@tertiary}{HTML}{837c74}
+% \colorlet{authentic@tertiary}{authentic@tertiary!50!black}
+% \colorlet{authentic@quarternary}{authentic@tertiary!50!black}
+% \definecolor{authentic@background}{HTML}{dad9d7}
+% %\colorlet{authentic@secondary}{authentic@primary!40}%
+% \definecolor{authentic@secondary}{HTML}{95b9dc}
+% \definecolor{authentic@tertiary}{HTML}{837c74}
 
 \setbeamercolor{structure}{fg=authentic@primary,bg=authentic@background}
 \setbeamercolor{palette primary}{fg=authentic@primary,bg=authentic@background}
 \setbeamercolor{palette secondary}{fg=authentic@secondary,bg=authentic@background}
 \setbeamercolor{palette tertiary}{fg=authentic@tertiary,bg=authentic@background}
-\setbeamercolor{palette quaternary}{fg=authentdic@quarternary,bg=authentic@background}
+\setbeamercolor{palette quarternary}{fg=authentic@quarternary,bg=authentic@background}
 
 % \setbeamercolor*{sidebar}{fg=authentic@primary,bg=authentic@background}
 % \setbeamercolor*{palette sidebar primary}{fg=authentic@primary,bg=authentic@background}
 % \setbeamercolor*{palette sidebar secondary}{fg=authentic@secondary,bg=authentic@background}
 % \setbeamercolor*{palette sidebar tertiary}{fg=authentic@tertiary,bg=authentic@background}
-% \setbeamercolor*{palette sidebar quaternary}{fg=authentic@quarternary,bg=authentic@background}
+% \setbeamercolor*{palette sidebar quarternary}{fg=authentic@quarternary,bg=authentic@background}
 
 % Main Colors
 \setbeamercolor{normal text}{fg=authentic@quarternary}
@@ -166,7 +182,7 @@
 
 % Frame Titles
 \setbeamercolor{frametitle}{fg=authentic@background}
-\setbeamercolor{framesubtitle}{fg=authentic@secondary}
+\setbeamercolor{framesubtitle}{fg=authentic@secondary!50!authentic@background}
 
 % Background
 % \setbeamertemplate{background canvas}[vertical shading][top=authentic@secondary,bottom=authentic@background]
@@ -198,12 +214,12 @@
 
 % Alerts
 \setbeamerfont{alerted text}{series=\bfseries}
-\setbeamercolor{alerted text}{fg=red}
+\setbeamercolor{alerted text}{fg=authentic@tertiary}
 
 % Blocks
 \setbeamertemplate{blocks}[default]
 \setbeamercolor{block title}{fg=authentic@primary,bg=authentic@background}
-\setbeamercolor{block title alerted}{fg=red!80!blue,bg=authentic@background}
+\setbeamercolor{block title alerted}{fg=authentic@tertiary,bg=authentic@background}
 
 
 % Block example/theorem/corollary/fact/lemma/examples omitted
@@ -305,7 +321,7 @@
 
 \newcommand{\titleframe}{%
     {%
-        \usebackgroundtemplate{}%
+%         \usebackgroundtemplate{}%
         \begin{frame}[noframenumbering,plain,t]%
             \hypertarget{titlepage}%
             \titlepage%
