@@ -265,6 +265,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\tobottom}{\vskip0pt plus 1filll}
+\newcommand\footbox[1]{\parbox{.33\FOOTW}{#1}}
 
 \newboolean{authentic@footer}
 \newboolean{authentic@mail}
@@ -454,21 +455,21 @@
     \begin{beamercolorbox}[wd=\paperwidth,leftskip=\MARGL,rightskip=\MARGR]{footline}%
         \begin{minipage}[c][\FOOTH][c]{\FOOTW}%
             \ifauthentic@url
-                \usebeamerfont{webpage in footer}\usebeamercolor[fg]{webpage in footer}{\authentic@url}
+                \footbox{\usebeamerfont{webpage in footer}\usebeamercolor[fg]{webpage in footer}{\authentic@url}}
             \else
-                \quad
+                \footbox{\quad}
             \fi
             \hfill
             \ifauthentic@mail
-                \usebeamerfont{email in footer}\usebeamercolor[fg]{email in footer}{\authentic@mail}
+                \footbox{\centering\usebeamerfont{email in footer}\usebeamercolor[fg]{email in footer}{\authentic@mail}}
             \else
-                \quad
+                \footbox{\quad}
             \fi
             \hfill
             \ifauthentic@counter
-                \usebeamerfont{number in footer}\usebeamercolor[fg]{number in footer}{\insertframenumber}
+                \footbox{\raggedleft\usebeamerfont{number in footer}\usebeamercolor[fg]{number in footer}{\insertframenumber}}
             \else
-                \quad
+                \footbox{\quad}
             \fi
         \end{minipage}
     \end{beamercolorbox}
