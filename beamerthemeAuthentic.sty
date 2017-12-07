@@ -419,9 +419,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{frametitle}
 {%
-\setlength{\CHAPL}{\maxof{\HEADW * \ratio{\insertsectionstartpage pt}{\insertdocumentendpage pt} - \MARGL}{0pt}}%
-\setlength{\PROGL}{\maxof{\HEADW * \ratio{\insertpagenumber pt}{\insertdocumentendpage pt} - \CHAPL - \MARGL}{0pt}}%
-\setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}%
 \nointerlineskip%
 \begin{minipage}[b][\HEADH][t]{\HEADW - \MARGL}
     \vspace{\MARGT}
@@ -436,6 +433,9 @@
         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\\\insertframesubtitle}%
     \fi
     \ifauthentic@progress%
+    \setlength{\CHAPL}{\maxof{\HEADW * \ratio{\insertsectionstartpage pt}{\insertdocumentendpage pt} - \MARGL}{0pt}}%
+    \setlength{\PROGL}{\maxof{\HEADW * \ratio{\insertpagenumber pt}{\insertdocumentendpage pt} - \CHAPL - \MARGL}{0pt}}%
+    \setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}%
     \vfill
     \tiny
     \usebeamercolor[fg]{palette primary}{\rule{\CHAPL}{.2\A}}%
