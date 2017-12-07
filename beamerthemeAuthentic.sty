@@ -112,6 +112,12 @@
 \setlength{\PROGR}{\HEADW}
 \newlength{\CHAPL}
 \setlength{\CHAPL}{0pt}
+\newlength{\MINP}
+\setlength{\MINP}{0pt}
+\newlength{\MAXP}
+\setlength{\MAXP}{1pt}
+\newlength{\PARTL}
+\setlength{\PARTL}{1pt}
 
 % overwrite beamer default values
 \setlength\fboxsep{0pt}
@@ -294,8 +300,13 @@
 }
 
 \newboolean{authentic@progress}
-\newcommand{\enableprogress}[1]{%
-    \setboolean{authentic@progress}{#1}%
+\newboolean{authentic@sectionprogress}
+\newcommand{\enableprogress}[2][slide]{%
+    \setboolean{authentic@progress}{#2}%
+    \ifthenelse%
+        {\equal {#1}{section}}%
+        {\setboolean{authentic@sectionprogress}{true}}%
+        {\setboolean{authentic@sectionprogress}{false}}
 }
 
 \newboolean{authentic@banner}
@@ -434,9 +445,45 @@
         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\\\insertframesubtitle}%
     \fi
     \ifauthentic@progress%
-    \setlength{\CHAPL}{\maxof{\HEADW * \ratio{\insertsectionstartpage pt}{\insertdocumentendpage pt} - \MARGL}{0pt}}%
-    \setlength{\PROGL}{\maxof{\HEADW * \ratio{\insertpagenumber pt}{\insertdocumentendpage pt} - \CHAPL - \MARGL}{0pt}}%
-    \setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}%
+    \setlength{\MINP}
+        {\minof
+            {\insertpagenumber pt}
+            {\insertpartstartpage pt}
+        }
+    \setlength{\MAXP}
+        {\maxof
+            {\insertpagenumber pt}
+            {\insertpartendpage pt}
+        }
+    \setlength{\PARTL}{\MAXP - \MINP}
+    \setlength{\CHAPL}
+        {\maxof
+            {\HEADW * \ratio
+                {\insertsectionstartpage pt - \MINP}
+                {\PARTL}
+                - \MARGL}
+            {0pt}
+        }
+    \ifauthentic@sectionprogress%
+    \setlength{\PROGL}
+        {\maxof
+            {\HEADW * \ratio
+                {\insertsectionendpage pt - \MINP}
+                {\PARTL}
+                - \CHAPL - \MARGL}
+            {0pt}
+        }
+    \else%
+    \setlength{\PROGL}
+        {\maxof
+            {\HEADW * \ratio
+                {\insertpagenumber pt - \MINP}
+                {\PARTL}
+                - \CHAPL - \MARGL}
+            {0pt}
+        }
+    \fi%
+    \setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}
     \vfill
     \tiny
     \usebeamercolor[fg]{palette primary}{\rule{\CHAPL}{.2\A}}%
