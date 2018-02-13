@@ -455,7 +455,11 @@
             {\insertpagenumber pt}
             {\insertpartendpage pt}
         }
-    \setlength{\PARTL}{\MAXP - \MINP}
+    \setlength{\PARTL}
+        {\maxof
+            {\MAXP - \MINP}
+            {1pt}
+        }
     \setlength{\CHAPL}
         {\maxof
             {\HEADW * \ratio
