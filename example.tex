@@ -17,18 +17,57 @@
 \author{Patrick Holthaus}
 \date{\today}
 
-%%% Default values
-%% Header/title options
-% \usebanner[1]{<img>} %mandatory: image file; optional: scale factor
-% \primarylogo[0pt]{<img>} %mandatory: image file; optional: margin
-% \secondarylogo{<img>} %mandatory: image file;
-% \enableprogress{true}
-% \enablesection{false}
+%%
+%% Title page options
+%% ------------------
 
+% banner image
+% \usebanner[<scale>]{<img>}
+%   img:        image to display (filename)             default: <unset>
+%   scale:      scale factor (float)                    default: 1
+
+% logo image for front page and slides
+% \primarylogo[<margin>]{<img>}
+%   img:        image to display (filename)             default: <unset>
+%   margin:     margin in page header (length)          default: 0pt
+
+% secondary logo image for front page
+% \secondarylogo[<size>]{<img>}
+%   img:        image to display (filename)             default: <unset>
+
+%%
+%% Slide header options
+%% --------------------
+
+% progress bar
+% (below title and subtitle)
+% \enableprogress[<style>]{<enabled>}
+%   enabled:    enable progress (boolean)               default: true
+%   style:      visualization mode (slide or section)   default: slide
+
+% section listing instead of primary logo
+% (top right corner)
+% \enablesection{<enabled>}
+%   enabled:    enable listing                          default: false
+
+%%
 %% Footer options
-% \enablecounter{true}
-% \myemail{<myemail>} %default: none
-% \myurl{<myurl>} %default: none
+%% --------------
+
+% page counter
+% (lower right corner)
+% \enablecounter{<enabled>}
+%   enabled:    enable page counter                     default: false
+
+% display e-mail address
+% (lower center)
+% \myemail{<address>}
+%   address:    address to display                     default: <unset>
+
+% display website
+% (lower left)
+% \myurl{<address>}
+%   address:    address to display                     default: <unset>
 
 \begin{document}
 
