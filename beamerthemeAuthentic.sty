@@ -90,6 +90,12 @@
 \newlength{\HEADW}
 \setlength{\HEADW}{\paperwidth - \UTILW}
 
+\newlength{\PROGW}
+\setlength{\PROGW}{\HEADW - \MARGL}
+
+\newlength{\PROGH}
+\setlength{\PROGH}{.2\A}
+
 \newlength{\TEXTH}
 \setlength{\TEXTH}{\paperheight - \HEADH - \FOOTH}
 
@@ -104,19 +110,18 @@
 \newlength{\HEADSKIP}
 \setlength{\HEADSKIP}{\maxof{\HEADH}{\UTILH}}
 
-% defaults
-\newlength{\PROGL}
-\setlength{\PROGL}{0pt}
-\newlength{\PROGR}
-\setlength{\PROGR}{\HEADW}
+% calculated
 \newlength{\CHAPL}
-\setlength{\CHAPL}{0pt}
-\newlength{\MINP}
-\setlength{\MINP}{0pt}
-\newlength{\MAXP}
-\setlength{\MAXP}{1pt}
+\newlength{\CURRL}
+\newlength{\FREEL}
 \newlength{\PARTL}
-\setlength{\PARTL}{1pt}
+\newlength{\PRIOL}
+
+\newlength{\CHAPW}
+\newlength{\CURRW}
+\newlength{\FREEW}
+\newlength{\PARTW}
+\newlength{\PRIOW}
 
 % overwrite beamer default values
 \setlength\fboxsep{0pt}
@@ -440,59 +445,46 @@
         \usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}{\insertframetitle}%
     \fi
     \ifx\insertframesubtitle\@empty
-        %
+        \usebeamerfont{framesubtitle}
     \else
         \usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}{\\\insertframesubtitle}%
     \fi
-    \ifauthentic@progress%
-    \setlength{\MINP}
-        {\minof
-            {\insertpagenumber pt}
-            {\insertpartstartpage pt}
-        }
-    \setlength{\MAXP}
-        {\maxof
-            {\insertpagenumber pt}
-            {\insertpartendpage pt}
-        }
-    \setlength{\PARTL}
-        {\maxof
-            {\MAXP - \MINP}
-            {1pt}
-        }
-    \setlength{\CHAPL}
-        {\maxof
-            {\HEADW * \ratio
-                {\insertsectionstartpage pt - \MINP}
-                {\PARTL}
-                - \MARGL}
-            {0pt}
-        }
-    \ifauthentic@sectionprogress%
-    \setlength{\PROGL}
-        {\maxof
-            {\HEADW * \ratio
-                {\insertsectionendpage pt - \MINP}
-                {\PARTL}
-                - \CHAPL - \MARGL}
-            {0pt}
-        }
-    \else%
-    \setlength{\PROGL}
-        {\maxof
-            {\HEADW * \ratio
-                {\insertpagenumber pt - \MINP}
-                {\PARTL}
-                - \CHAPL - \MARGL}
-            {0pt}
-        }
-    \fi%
-    \setlength{\PROGR}{\HEADW - \CHAPL - \PROGL - \MARGL}
     \vfill
     \tiny
-    \usebeamercolor[fg]{palette primary}{\rule{\CHAPL}{.2\A}}%
-    \usebeamercolor[fg]{palette secondary}{\rule{\PROGL}{.2\A}}%
-    \usebeamercolor[bg]{palette primary}{\rule{\PROGR}{.2\A}}%
+    \ifauthentic@progress%
+%
+%       calculate page ranges for progress par
+        \setlength{\PARTL}{\insertpartendpage pt - \insertpartstartpage pt + 1pt}
+        \setlength{\CHAPL}{\insertsectionendpage pt - \insertsectionstartpage pt + 1pt}
+        \setlength{\PRIOL}{\insertsectionstartpage pt - \insertpartstartpage pt}
+        \ifauthentic@sectionprogress%
+            % whole section already
+            \setlength{\CURRL}{\insertsectionendpage pt - \insertsectionstartpage pt + 1pt}
+        \else
+            % only up to this page
+            \setlength{\CURRL}{\insertpagenumber pt - \insertsectionstartpage pt}
+        \fi
+        \ifdim\PARTL = 1pt%
+            % fill completely in single page parts
+            \setlength{\CURRL}{0 pt}%
+            \setlength{\PRIOL}{1 pt}%
+        \fi
+        \setlength{\FREEL}{\CHAPL - \CURRL}
+%
+%       convert page lengths to widths
+        \setlength{\CHAPW}{\PROGW * \ratio {\CHAPL}{\PARTL}}
+        \setlength{\CURRW}{\PROGW * \ratio{\CURRL}{\PARTL}}
+        \setlength{\PRIOW}{\PROGW * \ratio{\PRIOL}{\PARTL}}
+        \setlength{\FREEW}{\PROGW - \PRIOW - \CURRW}
+%
+%       part: (\insertpartendpage{} - \insertpartstartpage{} + 1) = \the\PARTL{} (\the\PROGW{})\\
+%       chap: (\insertsectionendpage{} - \insertsectionstartpage{} + 1)  = \the\CHAPL{} (\the\CHAPW{})\\
+%       curr: (\insertpagenumber{} - \insertsectionstartpage{}) = \the\CURRL{} (\the\CURRW{})\\
+%       prio: (\insertsectionstartpage{} - \insertpartstartpage{}) = \the\PRIOL{} (\the\PRIOW{})\\
+%
+        \usebeamercolor[fg]{palette primary}{\rule{\PRIOW}{\PROGH}}%
+        \usebeamercolor[fg]{palette secondary}{\rule{\CURRW}{\PROGH}}%
+        \usebeamercolor[bg]{palette primary}{\rule{\FREEW}{\PROGH}}%
     \fi%
 \end{minipage}%
 }
