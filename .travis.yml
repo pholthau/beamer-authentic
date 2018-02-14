@@ -16,7 +16,7 @@ script:
   - docker exec -ti builder convert build/showcase.pdf build/showcase.png
 
 before_deploy:
-  - docker cp builder:build/* build/
+  - docker cp builder:build .
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
 
