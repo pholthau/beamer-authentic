@@ -1,7 +1,12 @@
 sudo: required
-dist: artful
+services:
+  - docker
 before_install:
-  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
+  - docker pull ubuntu:17.10
+  - docker run -it ubuntu bash
+install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
   - sudo apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
 script:
   - mkdir _build
