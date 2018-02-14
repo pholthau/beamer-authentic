@@ -8,9 +8,10 @@ before_install:
   - docker ps -a
 
 install:
+  - docker exec -ti builder cat /etc/lsb-release
   - docker exec -ti builder apt-get -qq update
-  - docker exec -ti builder apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
   - docker exec -ti builder apt-get install -y --no-install-recommends qpdf graphicsmagick-imagemagick-compat
+  - docker exec -ti builder apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
 
 script:
   - docker exec -ti builder mkdir _build
