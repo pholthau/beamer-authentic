@@ -1,14 +1,17 @@
 sudo: required
 services:
   - docker
+
 before_install:
   - docker pull ubuntu:17.10
   - docker run --name builder -td ubuntu bash
   - docker ps -a
+
 install:
-  - docker exec -ti builder sudo apt-get -qq update
-  - docker exec -ti builder sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
-  - docker exec -ti builder sudo apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
+  - docker exec -ti builder apt-get -qq update
+  - docker exec -ti builder apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
+  - docker exec -ti builder apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
+
 script:
   - docker exec -ti builder mkdir _build
   - docker exec -ti builder pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
@@ -22,6 +25,7 @@ before_deploy:
   - docker cp builder:_build/* _build/
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
+
 deploy:
   provider: releases
   api_key:
