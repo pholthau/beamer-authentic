@@ -3,7 +3,7 @@ services:
   - docker
 before_install:
   - docker pull ubuntu:17.10
-  - docker run --name builer ubuntu bash
+  - docker run --name builer -td ubuntu bash
 install:
   - docker exec -ti builder sudo apt-get -qq update
   - docker exec -ti builder sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
