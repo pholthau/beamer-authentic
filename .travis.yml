@@ -10,7 +10,7 @@ before_install:
 install:
   - docker exec -ti builder apt-get -qq update
   - docker exec -ti builder apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
-  - docker exec -ti builder apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
+  - docker exec -ti builder apt-get install -y --no-install-recommends qpdf graphicsmagick-imagemagick-compat
 
 script:
   - docker exec -ti builder mkdir _build
