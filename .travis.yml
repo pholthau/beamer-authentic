@@ -1,11 +1,13 @@
 sudo: required
 dist: artful
 before_install:
-  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
+  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer qpdf graphicsmagick-imagemagick-compat
 script:
   - mkdir _build
   - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
   - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+  - qpdf example.pdf --pages _build/example.pdf 1,3 -- - | convert - _build/example.png
+
 before_deploy:
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
@@ -16,4 +18,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
-  file: _build/example.pdf
+  file:
+    - _build/example.pdf
+    - _build/example-0.png
+    - _build/example-1.png
