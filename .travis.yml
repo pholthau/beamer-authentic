@@ -1,0 +1,4 @@
+script:
+- mkdir _build
+- pdflatex -output-directory -interaction=nonstopmode -halt-on-error _build example.tex
+- pdflatex -output-directory -interaction=nonstopmode -halt-on-error _build example.tex
