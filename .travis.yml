@@ -13,7 +13,7 @@ script:
   - docker exec -ti builder bash -c 'qpdf build/example.pdf --pages build/example.pdf 1,3 -- - | convert - build/example.png'
 
 before_deploy:
-  - docker cp builder:build/ build
+  - docker cp builder:build build
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
 
