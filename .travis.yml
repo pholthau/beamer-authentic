@@ -3,17 +3,17 @@ services:
   - docker
 before_install:
   - docker pull ubuntu:17.10
-  - docker run -it ubuntu bash
+  - docker run --name builer ubuntu bash
 install:
-  - sudo apt-get -qq update
-  - sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
-  - sudo apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
+  - docker exec -ti builder sudo apt-get -qq update
+  - docker exec -ti builder sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
+  - docker exec -ti sudo apt-get install -y --no-install-recommends qpdf=7.0.0-1 graphicsmagick-imagemagick-compat
 script:
-  - mkdir _build
-  - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
-  - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
-  - qpdf --version
-  - qpdf --help
+  - docker exec -ti mkdir _build
+  - docker exec -ti pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+  - docker exec -ti pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+  - docker exec -ti qpdf --version
+  - docker exec -ti qpdf --help
   - #qpdf _build/example.pdf --pages _build/example.pdf 1,3 -- - | convert - _build/example.png
 
 before_deploy:
@@ -24,8 +24,8 @@ deploy:
   api_key:
     secure: "D5/yOFTPz9/rbicrMl3wji0xASZBsiAzswkHVHEE0N6PsDfdY1uTTo6bYNgdrfC6JDw2OKmGkO/iuet8o2csqpnOfQ+VWO7/7Ld2TPdGQ3Gq3aIX3cb8IXmWhQmjsZqYeDhMcEnHp1JvjCg+uF2tsS55wYDokzCWmfLCRu3c16KtxvMeLWhdUdB67DY/M2SpcXoTD48f+xZ7u/UV2uXaGKQHkHGkomWH7mH0eMjws9BjqItU1S7ckCY7EYYk6Sj/WHqzt8mr3zrDCP0yEBPsEndzoVLVYGFCxm4t8UbwulHuxHhX6Rys0ojwVZVkDsbfq0W7LQT4si2sawXljV0yzOJv3OhuXgHSaSA5M5ZZ9Leafh/7yxBV5tLVMB/tkh1T8ajTKw5A4Fhvv8ajSdMSRtbrbN5a9ugrzn4KOqEBAHRg7CQL+RveenAeillQgvrRP7Y3BuMnpVh5nDUyt4VIfBF5yH+U8AB7C4Ryp7UifrejOSgNAquO4QPw47N0hggA5XJgr6YrSFz1oojBfDLa6RXjwRlkCJhv0S8AQ1vm5QtPcmA0EpkizheWuGVP/BHrcoUna2o3UyZ4K3GJKuvg87rwDUHdNmCXIRzPMS3pBpZtbeR8Egq6DtdNG0N7Zu9XK49dJGYIAR3V8f1ynOtVocimPqgXvltfzCVLAaIf5Ys="
   skip_cleanup: true
-  on:
-    tags: true
+  #on:
+  #  tags: true
   file:
     - _build/example.pdf
     - #_build/example-0.png
