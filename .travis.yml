@@ -14,6 +14,9 @@ script:
 
 before_deploy:
   - docker cp builder:/home/tmp/build/ ./build
+  - docker exec -ti builder ls build/
+  - ls build/
+  - ls
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
 
