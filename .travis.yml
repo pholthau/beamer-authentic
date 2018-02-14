@@ -6,7 +6,7 @@ script:
   - mkdir _build
   - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
   - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
-  - qpdf example.pdf --pages _build/example.pdf 1,3 -- - | convert - _build/example.png
+  - qpdf _build/example.pdf --pages _build/example.pdf 1,3 -- - | convert - _build/example.png
 
 before_deploy:
   - git config --local user.name "Patrick Holthaus"
