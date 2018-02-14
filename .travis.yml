@@ -10,14 +10,11 @@ script:
   - docker exec -ti builder mkdir -p build
   - docker exec -ti builder pdflatex -interaction=nonstopmode -halt-on-error -output-directory build example.tex
   - docker exec -ti builder pdflatex -interaction=nonstopmode -halt-on-error -output-directory build example.tex
-  - docker exec -ti builder qpdf build/example.pdf --pages build/example.pdf 1,2,9 -- build/tmp.pdf
-  - docker exec -ti builder convert build/tmp.pdf build/example.png
+  - docker exec -ti builder qpdf build/example.pdf --pages build/example.pdf 1,9 -- build/tmp.pdf
+  - docker exec -ti builder convert build/tmp.pdf build/example-%d.png
 
 before_deploy:
   - docker cp builder:/home/tmp/build/ ./build
-  - docker exec -ti builder ls build/
-  - ls build/
-  - ls
   - git config --local user.name "Patrick Holthaus"
   - git config --local user.email "patrick.holthaus@googlemail.com"
 
@@ -30,6 +27,5 @@ deploy:
     tags: true
   file:
     - build/example.pdf
-    - build/example.png
     - build/example-0.png
     - build/example-1.png
