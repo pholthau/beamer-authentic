@@ -1,9 +1,11 @@
-
 sudo: required
-dist: artful
+  dist: artful
 before_install:
-- sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
+  - sudo apt-get -qq update && sudo apt-get install -y --no-install-recommends texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra latex-beamer
 script:
-- mkdir _build
-- pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
-- pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+  - mkdir _build
+  - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+  - pdflatex -output-directory -interaction=nonstopmode -halt-on-error -output-directory _build example.tex
+addons:
+  artifacts: true
+  paths: _build/example.pdf
