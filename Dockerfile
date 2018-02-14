@@ -5,7 +5,7 @@ CMD          bash
 RUN mkdir -p /home/tmp
 WORKDIR /home/tmp
 
-ADD *
+ADD . .
 
 RUN apt-get -qq update
 RUN apt-get install -y --no-install-recommends qpdf graphicsmagick-imagemagick-compat
