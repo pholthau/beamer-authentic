@@ -29,5 +29,5 @@ deploy:
   #  tags: true
   file:
     - build/example.pdf
-    - build/example-0.png
-    - build/example-1.png
+    - build/showcase-0.png
+    - build/showcase-1.png
