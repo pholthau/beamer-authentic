@@ -8,7 +8,7 @@ A plain authentic latex beamer theme
 
 ### Plain styles
 
-<img style='border:10px solid black' title="Title slide without logos" src="https://raw.github.com/pholthau/beamer-authentic/master/samples/front-plain.png" width="400"> <img title="Plain slide" src="https://raw.github.com/pholthau/beamer-authentic/master/samples/plain.png" width="400">
+<img title="Title slide without logos" src="https://raw.github.com/pholthau/beamer-authentic/master/samples/front-plain.png" width="400"> <img title="Plain slide" src="https://raw.github.com/pholthau/beamer-authentic/master/samples/plain.png" width="400">
 
 ### All features enabled
 
