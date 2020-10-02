@@ -31,8 +31,12 @@
 \RequirePackage{helvet}
 \RequirePackage{fp}
 \RequirePackage{totcount}
+\RequirePackage{geometry}
 \regtotcounter{section}
-\IfFileExists{noto.sty}{\RequirePackage{noto}}
+
+\usepackage[skins]{tcolorbox}
+
+% \IfFileExists{noto.sty}{\RequirePackage{noto}}
 
 \mode<presentation>
 
@@ -193,7 +197,8 @@
 
 % Frame Titles
 \setbeamercolor{frametitle}{fg=authentic@background}
-\setbeamercolor{framesubtitle}{fg=authentic@secondary!50!authentic@background}
+\setbeamercolor{framesubtitle}{fg=authentic@secondary}
+\setbeamerfont{frametitle}{series=\bfseries}
 \setbeamerfont{framesubtitle}{series=\bfseries}
 
 % Background
@@ -264,6 +269,8 @@
 \setbeamerfont{number in footer}{series=\bfseries,size=\tiny}
 
 % Title/Subtitle
+\setbeamerfont{title}{series=\bfseries,size=\huge}
+\setbeamerfont{subtitle}{series=\normalfont,size=\Large}
 \setbeamercolor{title in headline}{fg=authentic@background,bg=authentic@primary}
 \setbeamerfont{title in headline}{series=\bfseries,size=\Large}
 \setbeamercolor{subtitle in headline}{fg=authentic@background,bg=authentic@primary}
@@ -321,6 +328,12 @@
     \setboolean{authentic@banner}{true}%
 }
 
+\newboolean{authentic@titlenote}
+\newcommand{\usetitlenote}[1]{%
+    \def\authentic@titlenote{#1}%
+    \setboolean{authentic@titlenote}{true}%
+}
+
 % \newcommand{\putat}[3]{\begin{picture}(0,0)(0,0)\put(#1,#2){#3}\end{picture}}
 
 \newboolean{authentic@primarylogo}
@@ -335,6 +348,16 @@
     \def\authentic@secondarylogo{\includegraphics[height=\HEADH,width=\UTILW,keepaspectratio]{#1}}%
     \def\authentic@secondarysymbol{\includegraphics[height=\SYMBOLH,width=\SYMBOLW,keepaspectratio]{#1}}%
     \setboolean{authentic@secondarylogo}{true}%
+}
+
+\newboolean{authentic@hideprimarylogo}
+\newcommand{\hideprimarylogo}{%
+    \setboolean{authentic@hideprimarylogo}{true}%
+}
+
+\newboolean{authentic@hidesecondarylogo}
+\newcommand{\hidesecondarylogo}{%
+    \setboolean{authentic@hidesecondarylogo}{true}%
 }
 
 \newcommand{\titleframe}{%
@@ -365,43 +388,66 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \setbeamertemplate{title page}
 {%
-\tobottom
-\begin{beamercolorbox}[wd=\paperwidth]{headline}
+\vspace*{3\A}
+% \begin{beamercolorbox}[wd=\paperwidth]{headline}
     \centering
-    \ifauthentic@banner
-        \authentic@banner
-
-        \bigskip
-    \fi
     \usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle
 
-    \bigskip
     \usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle
 
-    \bigskip
+    \vspace*{.5\A}
+    \ifauthentic@banner
+        \authentic@banner
+        \vspace*{\A}
+
+    \fi
+
+    \ifx\insertauthor\@empty\else
     \usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor
 
-    \bigskip
+    \vspace*{.5\A}
+    \fi
+    \ifx\insertinstitute\@empty\else
     \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute
 
-    \bigskip
-    \usebeamerfont{date}\usebeamercolor[fg]{date}\insertdate
+    \vspace*{.5\A}
+    \fi
+    \ifx\insertdate\@empty\else
+    \usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertdate
+    \fi
 
-    \bigskip
-    \begin{minipage}{\paperwidth}
-        \centering
-        \hspace{2\A}
-        \ifauthentic@primarylogo
-            \raisebox{-0.5\height}{\authentic@primarysymbol}
-        \fi
-        \hfill
-        \ifauthentic@secondarylogo
-            \raisebox{-0.5\height}{\authentic@secondarysymbol}
-        \fi
-        \hspace{2\A}
-    \end{minipage}
-\end{beamercolorbox}
 \tobottom
+\ifauthentic@titlenote
+\usebeamerfont{webpage in footer}\usebeamercolor[fg]{webpage in footer}{\authentic@titlenote}\\[-.5\A]
+\fi
+\begin{tikzpicture}[remember picture,overlay]
+\ifauthentic@hideprimarylogo
+\else
+  \node[anchor=south west] (primary) at (current page.south west) {\authentic@primarysymbol};
+\fi
+%   \tcbsetmacrotoheightofnode{\myheight}{primary};
+%   \tcbsetmacrotowidthofnode{\mywidth}{primary};
+%   \node[anchor=south east,minimum width=\mywidth,minimum height=\myheight] at (current page.south east) {\authentic@secondarysymbol};
+\ifauthentic@hidesecondarylogo
+\else
+\node[anchor=south east] at (current page.south east) {\authentic@secondarysymbol};
+\fi
+\end{tikzpicture}
+
+
+%     \vspace*{-15\A}
+%     \begin{minipage}{\paperwidth}
+%         \centering
+%         \ifauthentic@primarylogo
+%             \raisebox{-0.5\height}{\authentic@primarysymbol}
+%         \fi
+%         \hfill
+%         \ifauthentic@secondarylogo
+%             \raisebox{-0.5\height}{\authentic@secondarysymbol}
+%         \fi
+%         \hspace{2\A}
+%     \end{minipage}
+% \end{beamercolorbox}
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
