@@ -1,3 +1,5 @@
+This project is now continued at [GitLab](https://gitlab.com/pholthaus/beamer-authentic).
+
 # beamer-authentic
 
 A plain authentic latex beamer theme
